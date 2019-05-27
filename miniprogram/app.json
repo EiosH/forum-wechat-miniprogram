@@ -1,0 +1,23 @@
+{
+  "pages": [
+    "pages/posts/post",
+    "pages/posts/post-detail/post-detail",
+    "pages/myApp/myapp",
+    "pages/index/index",
+    "pages/userConsole/userConsole",
+    "pages/databaseGuide/databaseGuide",
+    "pages/storageConsole/storageConsole",
+    "pages/addFunction/addFunction",
+    "pages/chooseLib/chooseLib",
+    "pages/openapi/openapi",
+    "pages/Home/Home"
+  ],
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#F6F6F6",
+    "navigationBarTitleText": "云开发 QuickStart",
+    "navigationBarTextStyle": "black"
+  },
+  "sitemapLocation": "sitemap.json"
+}
