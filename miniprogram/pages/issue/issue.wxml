@@ -1,0 +1,29 @@
+<!--miniprogram/pages/issue/issue.wxml-->
+<view class='contianer'>
+  <view class="question-images">
+    <button  bindtap='ESJY_btn'>
+      <view class="q-image-wrap">
+        <image class='q-image' src='../../images/icon/ESJY.svg'></image>
+      </view>
+      <text>二手交易</text>
+    </button>
+    <button bindtap='SWZL_btn'>
+      <view class="q-image-wrap">
+        <image class='q-image' src='../../images/icon/SWZL.svg'></image>
+      </view>
+      <text>失物招领</text>
+    </button>
+    <button bindtap='JZXX_btn'>
+      <view class="q-image-wrap">
+        <image class='q-image' src='../../images/icon/JZXX.svg'></image>
+      </view>
+      <text>兼职信息</text>
+    </button>
+    <button bindtap='XSTC_btn'>
+      <view class="q-image-wrap">
+        <image class='q-image' src='../../images/icon/TCBB.svg'></image>
+      </view>
+      <text>表白吐槽</text>
+    </button>
+  </view>
+</view>

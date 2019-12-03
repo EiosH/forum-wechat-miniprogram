@@ -1,33 +1,63 @@
 <import src="post-item/post-item-template.wxml" />
-<!-- <import src="/pages/posts/post-item/post-item-template.wxml" /> -->
-<view>
-    <swiper catchtap="onSwiperTap" vertical="{{false}}" indicator-dots="true" autoplay="true" interval="5000">
-        <swiper-item>
-            <image id="7" src="/images/wx.png" data-postId="3"></image>
-        </swiper-item>
-        <swiper-item>
-            <image src="/images/vr.png" data-postId="4"></image>
-        </swiper-item>
-        <swiper-item>
-            <image src="/images/iqiyi.png" data-postId="5"></image>
-        </swiper-item>
-    </swiper>
-    <block wx:for="{{postList}}" wx:key="item"  wx:for-index="idx">
-        <!--//template-->
-        <view   catchtap="onPostTap" data-postId="{{item.postId}}">
-             <template is="postItem" data="{{...item}}"/>
+<view wx:if="{{logged}}">
+  <swiper circular="true" vertical="{{false}}" indicator-dots="true" autoplay="true" interval="5000">
+    <swiper-item>
+      <image src="/images/1.jpg"></image>
+    </swiper-item>
+    <swiper-item>
+      <image src="/images/2.jpg"></image>
+    </swiper-item>
+    <swiper-item>
+      <image src="/images/3.jpg"></image>
+    </swiper-item>
+  </swiper>
+  <view class='my_contianer'>
+    <view class="my_question-images">
+      <button bindtap='ESJY_btn'>
+        <view class="my_image-wrap">
+          <image class='qq-image' src='../../images/icon/ESJY.svg'></image>
         </view>
-    </block>
+        <text class='my_text'>二手交易</text>
+      </button>
+      <button bindtap='SWZL_btn'>
+        <view class="my_image-wrap">
+          <image class='qq-image' src='../../images/icon/SWZL.svg'></image>
+        </view>
+        <text  class='my_text'>失物招领</text>
+      </button>
+      <button bindtap='JZXX_btn'>
+        <view class="my_image-wrap">
+          <image class='qq-image' src='../../images/icon/JZXX.svg'></image>
+        </view>
+        <text  class='my_text'>兼职信息</text>
+      </button>
+      <button bindtap='XSTC_btn'>
+        <view class="my_image-wrap">
+          <image class='qq-image' src='../../images/icon/TCBB.svg'></image>
+        </view>
+        <text  class='my_text'>表白吐槽</text>
+      </button>
+    </view>
+  </view>
+  <block wx:for="{{postList}}" wx:key="item" wx:for-index="idx">
+    <!--//template-->
+    <view  catchtap="onPostTap" data-id="{{item._id}}">
+      <template is="postItem" data="{{...item}}" />
+    </view>
+  </block>
+  <view  wx:if="{{disabled}}" id='mask-view'>
+  <input id='my_input' placeholder="评论 {{reply}}" placeholder-style="font-size:35rpx;" maxlength="50" focus="true" bindconfirm="confirm_btn" confirm-type="评论"></input>
+  <view id='mask' catchtap="no_focus"></view>
+  </view>
 </view>
-
-<!-- <view wx:else class="container">
-    <view class="userinfo">
+<view wx:else class="container">
+  <view class="userinfo">
     <open-data class="userinfo-avatar" type="userAvatarUrl"></open-data>
     <open-data class="userinfo-nickname" type="userNickName"></open-data>
   </view>
   <view class="usermotto">
-     <button class='bottom' type='primary' open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindGetUserInfo">
-        授权登录
+    <button class='bottom' type='primary' open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindGetUserInfo">
+      授权登录
     </button>
   </view>
-</view> -->
+</view>

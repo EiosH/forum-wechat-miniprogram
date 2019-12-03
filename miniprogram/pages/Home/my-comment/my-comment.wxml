@@ -1,0 +1,13 @@
+<import src="../../posts/post-item/post-item-template.wxml" />
+<view>
+<block wx:for="{{postList}}" wx:key="item" wx:for-index="idx">
+    <view catchtap="onPostTap" data-id="{{item._id}}">
+         <template is="postItem" data="{{...item}}"/>
+         <button class='delete' id='delete_comment' catchtap='delete_comment' data-id='{{item._id}}'>删除评论</button>
+    </view>
+</block>
+  <view  wx:if="{{disabled}}" id='mask-view'>
+  <input id='my_input' placeholder="评论 {{reply}}" placeholder-style="font-size:35rpx;" maxlength="50" focus="true" bindconfirm="confirm_btn" confirm-type="评论"></input>
+  <view id='mask' catchtap="no_focus"></view>
+  </view>
+</view>

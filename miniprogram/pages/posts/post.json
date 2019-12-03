@@ -1,3 +1,4 @@
 {
-   "navigationBarTitleText":"工大二手交易"
+   "navigationBarTitleText":"首页",
+   "enablePullDownRefresh": true
 }

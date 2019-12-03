@@ -1,1 +1,84 @@
-/* miniprogram/pages/Home/Home.wxss */
+/* @import "../posts/post-item/post-item-template.wxss"; */
+
+page {
+  background-color: #f4f4f4;
+}
+
+.right {
+  float: right;
+  margin-right: 20px;
+  margin-top: 40rpx;
+  height: 50rpx;
+  width: 50rpx;
+}
+
+#person_btn {
+  height: 190rpx;
+  background-color: #fffffe;
+  margin-bottom: 20rpx;
+}
+
+.text {
+  float: left;
+  margin-left: 20px;
+  margin-top: 25rpx;
+  font-size: 35rpx;
+  /* height: 50rpx;
+  width: 50rpx; */
+}
+
+.img {
+  float: left;
+  margin-left: 10rpx;
+  margin-top: 30rpx;
+  height: 70rpx;
+  width: 70rpx;
+}
+
+.btn {
+  border-top: solid 2px #f4f4f4;
+  height: 130rpx;
+  background-color: #fffffe;
+}
+
+#my_avatarUrl {
+  position: absolute;
+  left: 30rpx;
+  margin: 30rpx 0rpx;
+  height: 130rpx;
+  width: 130rpx;
+  border-radius: 80rpx;
+}
+
+#my_nickName {
+  position: absolute;
+  left: 200rpx;
+  top: 25rpx;
+  font-size: 35rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+#my_location {
+  position: absolute;
+  left: 250rpx;
+  top: 86rpx;
+  font-size: 30rpx;
+  color: #777;
+}
+
+.location {
+  position: absolute;
+  left: 200rpx;
+  top: 104rpx;
+  height: 40rpx;
+  width: 40rpx;
+}
+
+#sex {
+  position: absolute;
+  left: 350rpx;
+  top: 95rpx;
+  height: 60rpx;
+  width: 60rpx;
+}

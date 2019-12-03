@@ -1,0 +1,20 @@
+<!--miniprogram/pages/issue/issue.wxml-->
+<view class='contianer'>
+  <form bindsubmit='searchBox'>
+
+    <textarea  bindblur="bindTextAreaBlur"  id='text' type='text' maxlength="200" auto-height="true" auto-focus='true' confirm-type="发布"  value="{{ceshi}}" ></textarea>
+    <view class="question-images">
+      <block wx:for="{{images}}" wx:key="*this">
+        <view class="q-image-wrap">
+          <!-- 图片缩略图  -->
+          <image class="q-image" src="{{item}}" mode="aspectFill" data-idx="{{index}}" bindtap="removeImage"></image>
+          <!-- 移除图片的按钮  -->
+          <!-- <view class="q-image-remover" data-idx="{{index}}" bindtap="removeImage">删除</view> -->
+        </view>
+      </block>
+    </view>
+    <image class='appendixImg' bindtap='onImg' src='../../../images/addimg.png'></image>
+    <button type="primary" form-type='submit'>立即发布</button>
+  </form>
+
+</view>

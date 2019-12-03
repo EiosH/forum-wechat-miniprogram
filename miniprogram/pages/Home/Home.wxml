@@ -1,2 +1,47 @@
 <!--miniprogram/pages/Home/Home.wxml-->
-<text>miniprogram/pages/Home/Home.wxml</text>
+<!-- <loading hidden="{{logged}}">
+玩命加载中
+</loading> -->
+<!-- <import src="../posts/post-item/post-item-template.wxml" /> -->
+<view>
+  <button id='person_btn'> 
+  <!-- bindtap='person' -->
+    <image id='my_avatarUrl' src='{{avatarUrl}}'></image>
+    <text id='my_nickName'>{{nickName}}</text>
+    <!-- <image class='right' src='../../images/icon/right.svg'></image> -->
+    <image class='location' src='../../images/icon/location.svg'></image>
+    <text id='my_location'>{{city}}</text>
+    <image id='sex' src='{{sex}}'></image>
+  </button>
+  <button class='btn' bindtap='post'>
+    <image class='img' src='../../images/icon/post1.svg'></image>
+    <text class='text'>我的发布</text>
+    <image class='right' src='../../images/icon/right.svg'></image>
+  </button>
+  <button class='btn' bindtap='collect'>
+    <image class='img' src='../../images/icon/collect1.svg'></image>
+    <text class='text'>我的收藏</text>
+    <image class='right' src='../../images/icon/right.svg'></image>
+  </button>
+  <button class='btn' bindtap='comment'>
+    <image class='img' src='../../images/icon/comment1.svg'></image>
+
+    <text class='text'>我的评论</text>
+    <image class='right' src='../../images/icon/right.svg'></image>
+
+  </button>
+  <!-- <button class='btn-adm'>
+    <text  class='text'>联系我们</text>
+    <image class='right' src='../../images/icon/right.svg'></image>
+
+  </button>
+   -->
+  <button class='btn' bindtap='Administrator'>
+    <image class='img' src='../../images/icon/adm.svg'></image>
+
+    <text class='text'>管理员入口</text>
+    <image class='right' src='../../images/icon/right.svg'></image>
+
+  </button>
+
+</view>

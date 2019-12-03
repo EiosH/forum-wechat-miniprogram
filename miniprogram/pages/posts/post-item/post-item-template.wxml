@@ -1,21 +1,36 @@
 <template name="postItem">
-    <view class="post-container">
-       <view class="post-author-date">
-           <image class="post-author" src="{{avatar}}"></image>
-                <text class="post-date">{{date}}</text>
-        </view>
-           <text class="post-title">{{title}}</text>
-            <image class="post-image" src="{{imgSrc}}"></image>
-            <text class="post-content">{{content}}
-            </text>
-            <view class="post-like">
-                    <image class="post-like-image" 
-                    src="/images/icon/chat.png"></image>
-                    <text class="post-like-font">{{collection}}</text>
+  <view class="post-container">
+    <view class="post-author-date">
+      <image class="post-author" src="{{avatar}}"></image>
+      <text class="post-date">{{author}}</text>
+    </view>
+    <text class="post-content">{{content}}</text>
+    <button class="post-btn" catchtap='post_btn' data-id="{{type}}">{{type}}</button>
+    <view class='question-images'>
+      <view class='q-image-wrap' wx:key="*this" wx:for="{{imgSrc}}">
+        <image class="post-image q-image" src="{{item}}" data-id="{{item+','+imgSrc}}" catchtap="previewImage" mode="aspectFill"></image>
+      </view>
+    </view>
+    <view class="post-like">
+      <text class="post-like-font">{{my_date}}</text>
+      <view class="post-like-right">
+        <image catchtap='collect_btn' data-id="{{_id+'.'+my_idx+'.'+collect_src}}" class="post-like-image" src="{{collect_src==true?'/images/icon/collection(1).svg':'/images/icon/collection.svg'}}"></image>
+        <text class="post-like-font">收藏</text>
+        <image catchtap='comment_btn' data-id="{{author+'.'+_id}}" class="post-like-image" src="/images/icon/comment.svg"></image>
+        <text catchtap='comment_btn' class="post-like-font">{{my_comment?my_comment.length:0}}</text>
+        <image class="post-like-image" src="/images/icon/view.svg"></image>
+        <text class="post-like-font">{{reading}}</text>
 
-                    <image class="post-like-image" 
-                    src="/images/icon/view.png"></image>
-                    <text class="post-like-font">{{reading}}</text>
-            </view>
+
+        <!-- <image class="post-like-image" src="{{my_collection}}"></image> -->
+      </view>
+      <view class="post-comment">
+        <view wx:key="*this" wx:for="{{my_comment}}">
+          <text class="post-content-user">{{item[1]}}:</text>
+          <text class="post-content">{{item[0]}}</text>
         </view>
+
+      </view>
+    </view>
+  </view>
 </template>

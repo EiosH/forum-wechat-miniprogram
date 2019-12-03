@@ -1,0 +1,36 @@
+/* miniprogram/pages/issue/issue-shiwuzhaoling/issue-shiwuzhaoling.wxss */
+.contianer {
+  margin: 20rpx 20rpx;
+}
+button{
+  width: 400rpx;
+
+  border: solid #aaa 1rpx;
+  border-radius: 2px ;
+  margin-bottom: 10rpx;
+
+}
+.question-images {
+  display: center;
+  flex-wrap: nowrap;
+  align-items: left;
+  margin-top: 110rpx;
+  width: 100%;
+
+}
+.q-image {
+  flex: 1;
+  height: 120rpx;
+  width: 120rpx;
+}
+.q-image-wrap {
+  width: 130rpx;
+  height: 100rpx;
+  margin: 0 auto
+
+  /* border:  */
+}
+text{
+  /* padding-left: 12rpx; */
+  font-size: 25rpx
+}

@@ -1,203 +1,208 @@
-var postsData = require('../../../data/posts-data.js')
-var app = getApp();
+var getData = require("../post.js").getData
+const app = getApp();
+const db = wx.cloud.database()
+var util = require('../../../utils/utils.js');
+var this_database = [];
+var comment
+var current_com;
+var postId;
+const upData = function(this_database, that) {
+  that.setData({
+    postList: this_database,
+  })
+}
 Page({
-    data: {
-        isPlayingMusic: false
-    },
-    onLoad: function (option) {
-        var postId = option.id;
-        this.data.currentPostId = postId;
-        var postData = postsData.postList[postId];
-        this.setData({
-            postData: postData
-        })
-
-        var postsCollected = wx.getStorageSync('posts_collected')
-        if (postsCollected) {
-            var postCollected = postsCollected[postId]
-            this.setData({
-                collected: postCollected
-            })
-        }
-        else {
-            var postsCollected = {};
-            postsCollected[postId] = false;
-            wx.setStorageSync('posts_collected', postsCollected);
-        }
-
-        if (app.globalData.g_isPlayingMusic && app.globalData.g_currentMusicPostId
-            === postId) {
-            this.setData({
-                isPlayingMusic: true
-            })
-        }
-        this.setMusicMonitor();
-    },
-
-    setMusicMonitor: function () {
-        //点击播放图标和总控开关都会触发这个函数
-        var that = this;
-        wx.onBackgroundAudioPlay(function (event) {
-            var pages = getCurrentPages();
-            var currentPage = pages[pages.length - 1];
-            if (currentPage.data.currentPostId === that.data.currentPostId) {
-                // 打开多个post-detail页面后，每个页面不会关闭，只会隐藏。通过页面栈拿到到
-                // 当前页面的postid，只处理当前页面的音乐播放。
-                if (app.globalData.g_currentMusicPostId == that.data.currentPostId) {
-                    // 播放当前页面音乐才改变图标
-                    that.setData({
-                        isPlayingMusic: true
-                    })
-                }
-                // if(app.globalData.g_currentMusicPostId == that.data.currentPostId )
-                // app.globalData.g_currentMusicPostId = that.data.currentPostId;
+  data: {
+    nickName: null
+  },
+  onLoad: function(option) {
+    postId = option.id;
+    var sum;
+    var that = this;
+    this.data.nickName = app.globalData.nickName
+    that.setData({
+      id: postId
+    })
+    db.collection('data').doc(postId).get({
+      success(res) {
+        // res.data 是包含以上定义的两条记录的数组
+        this_database = [res.data];
+        sum = parseInt(res.data.reading) + 1 + ''
+        wx.cloud.callFunction({
+            // 云函数名称
+            name: 'read',
+            // 传给云函数的参数
+            data: {
+              postId: postId,
+              sum: sum
+            },
+          })
+          .then(res => {
+            try {
+              // this_database[0].reading++
+              console.log(res.result)
+              getData.getData(this_database, that)
+            } catch (err) {
+              console.log(err)
             }
-            app.globalData.g_isPlayingMusic = true;
+          })
+          .catch(err=>{
+            console.log(err)
+          })
+      }
+    })
+  },
 
-        });
-        wx.onBackgroundAudioPause(function () {
-            var pages = getCurrentPages();
-            var currentPage = pages[pages.length - 1];
-            if (currentPage.data.currentPostId === that.data.currentPostId) {
-                if (app.globalData.g_currentMusicPostId == that.data.currentPostId) {
-                    that.setData({
-                        isPlayingMusic: false
-                    })
-                }
-            }
-            app.globalData.g_isPlayingMusic = false;
-            // app.globalData.g_currentMusicPostId = null;
-        });
-        wx.onBackgroundAudioStop(function () {
-            that.setData({
-                isPlayingMusic: false
-            })
-            app.globalData.g_isPlayingMusic = false;
-            // app.globalData.g_currentMusicPostId = null;
-        });
-    },
+  onPullDownRefresh: function() {
+    wx.showToast({
+      title: '正在刷新',
+      icon: 'loading',
+      duration: 2000
+    });
+    this.onLoad()
+  },
 
-    onColletionTap: function (event) {
-        // this.getPostsCollectedSyc();
-        this.getPostsCollectedAsy();
-    },
-
-    getPostsCollectedAsy: function () {
-        var that = this;
-        wx.getStorage({
-            key: "posts_collected",
-            success: function (res) {
-                var postsCollected = res.data;
-                var postCollected = postsCollected[that.data.currentPostId];
-                // 收藏变成未收藏，未收藏变成收藏
-                postCollected = !postCollected;
-                postsCollected[that.data.currentPostId] = postCollected;
-                that.showToast(postsCollected, postCollected);
-            }
-        })
-    },
-
-    getPostsCollectedSyc: function () {
-        var postsCollected = wx.getStorageSync('posts_collected');
-        var postCollected = postsCollected[this.data.currentPostId];
-        // 收藏变成未收藏，未收藏变成收藏
-        postCollected = !postCollected;
-        postsCollected[this.data.currentPostId] = postCollected;
-        this.showToast(postsCollected, postCollected);
-    },
-
-    showModal: function (postsCollected, postCollected) {
-        var that = this;
-        wx.showModal({
-            title: "收藏",
-            content: postCollected ? "收藏该文章？" : "取消收藏该文章？",
-            showCancel: "true",
-            cancelText: "取消",
-            cancelColor: "#333",
-            confirmText: "确认",
-            confirmColor: "#405f80",
-            success: function (res) {
-                if (res.confirm) {
-                    wx.setStorageSync('posts_collected', postsCollected);
-                    // 更新数据绑定变量，从而实现切换图片
-                    that.setData({
-                        collected: postCollected
-                    })
-                }
-            }
-        })
-    },
-
-    showToast: function (postsCollected, postCollected) {
-        // 更新文章是否的缓存值
-        wx.setStorageSync('posts_collected', postsCollected);
-        // 更新数据绑定变量，从而实现切换图片
-        this.setData({
-            collected: postCollected
-        })
-        wx.showToast({
-            title: postCollected ? "收藏成功" : "取消成功",
-            duration: 1000,
-            icon: "success"
-        })
-    },
-
-    onShareTap: function (event) {
-        var itemList = [
-            "分享给微信好友",
-            "分享到朋友圈",
-            "分享到QQ",
-            "分享到微博"
-        ];
-        wx.showActionSheet({
-            itemList: itemList,
-            itemColor: "#405f80",
-            success: function (res) {
-                // res.cancel 用户是不是点击了取消按钮
-                // res.tapIndex 数组元素的序号，从0开始
-                wx.showModal({
-                    title: "用户 " + itemList[res.tapIndex],
-                    content: "用户是否取消？" + res.cancel + "现在无法实现分享功能，什么时候能支持呢"
-                })
-            }
-        })
-    },
-
-    onMusicTap: function (event) {
-        var currentPostId = this.data.currentPostId;
-        var postData = postsData.postList[currentPostId];
-        var isPlayingMusic = this.data.isPlayingMusic;
-        if (isPlayingMusic) {
-            wx.pauseBackgroundAudio();
-            this.setData({
-                isPlayingMusic: false
-            })
-            // app.globalData.g_currentMusicPostId = null;
-            app.globalData.g_isPlayingMusic = false;
-        }
-        else {
-            wx.playBackgroundAudio({
-                dataUrl: postData.music.url,
-                title: postData.music.title,
-                coverImgUrl: postData.music.coverImg,
-            })
-            this.setData({
-                isPlayingMusic: true
-            })
-            app.globalData.g_currentMusicPostId = this.data.currentPostId;
-            app.globalData.g_isPlayingMusic = true;
-        }
-    },
-
-    /*
-    * 定义页面分享函数
-    */
-    onShareAppMessage: function (event) {
-        return {
-            title: '离思五首·其四',
-            desc: '曾经沧海难为水，除却巫山不是云',
-            path: '/pages/posts/post-detail/post-detail?id=0'
-        }
+  previewImage: function(e) {
+    var current = e.target.dataset.id.split(",")
+    var urls = [];
+    var current_len = current.length
+    for (var i = 1; i <= current_len; i++) {
+      if (current[i] != current[0]) {
+        urls.push(current[i])
+      }
     }
+    urls.unshift(current[0])
+    wx.previewImage({
+      current: current[0],
+      urls: urls // 需要预览的图片http链接列表
+    })
+  },
+  onPostTap: function(event) {
+
+  },
+  post_btn: function(event) {
+
+  },
+  collect_btn: function(event) {
+    var that = this;
+    var postId = event.currentTarget.dataset;
+    var id = postId.id.split(".")[0]
+    var idx = postId.id.split(".")[1]
+    var src = postId.id.split(".")[2]
+    db.collection('collect').orderBy('time', 'desc').get({
+      success(res) {
+        var suc = 0;
+        for (let i of res.data) {
+          if (i.collect_id == id) {
+            suc = 1;
+            break;
+          }
+        }
+        if (suc == 1) {
+          db.collection('collect').where({ //收藏
+            collect_id: id,
+            collecter: app.globalData.nickName
+          }).get({
+            success(res) {
+              var Id = res.data[0]._id
+              if (res.data[0].show == "true") {
+                db.collection('collect').doc(Id).update({
+                  data: {
+                    show: "false"
+                  }
+                })
+                this_database[idx].collect_src = false
+              } else if (res.data[0].show == "false") {
+                db.collection('collect').doc(Id).update({
+                  data: {
+                    show: "true"
+                  },
+                  success(res) {
+                    wx.showToast({
+                      title: '收藏成功',
+                      icon: 'success',
+                      duration: 600
+                    })
+                  }
+                })
+                this_database[idx].collect_src = true
+              }
+              upData(this_database, that)
+            }
+          })
+        } else {
+          db.collection('collect').add({
+            data: {
+              collect_id: id,
+              show: "true",
+              collecter: app.globalData.nickName
+            },
+            success(res) {
+              wx.showToast({
+                title: '收藏成功',
+                icon: 'success',
+                duration: 600
+              })
+              this_database[idx].collect_src = true
+              upData(this_database, that)
+            }
+          })
+        }
+      }
+    })
+
+
+
+
+
+  },
+  comment_btn: function(event) { //评论
+    var that = this;
+    var postId = event.currentTarget.dataset.id;
+    var reply = postId.split(".")[0]
+    var id = postId.split(".")[1]
+    postId = null
+    current_com = id
+    // var  = postId.split(".")[0]
+    that.setData({
+      reply: reply,
+      disabled: true
+    })
+  },
+  // 失去焦点
+  no_focus: function() {
+    this.setData({
+      disabled: false
+    })
+  },
+  confirm_btn: function(event) { //评论确认
+    var that = this
+    var value = []
+    value[0] = event.detail.value
+    value[1] = this.data.nickName
+    value[0] == "" || undefined || null || 0 || !value[1] ?
+      wx.showToast({
+        title: '内容为空',
+        icon: "none"
+      }) : (
+        db.collection("comment").add({
+          data: {
+            content: value,
+            post: current_com,
+            poster: value[1]
+          },
+          success(res) {
+            wx.showToast({
+              title: '发布成功'
+            })
+            that.setData({
+              disabled: false
+            })
+            getData.getData(this_database, that)
+            current_com = null
+          }
+        })
+      )
+  },
 
 })

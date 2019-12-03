@@ -1,4 +1,5 @@
 {
+	"appid": "wxe742f6b8ba862700",
 	"miniprogramRoot": "miniprogram/",
 	"cloudfunctionRoot": "cloudfunctions/",
 	"setting": {
@@ -8,11 +9,11 @@
 		"minified": true,
 		"newFeature": true
 	},
-	"appid": "wxe742f6b8ba862700",
-	"projectname": "miniprogram-test-2",
-	"libVersion": "2.2.5",
+	"projectname": "miniprogram",
+	"libVersion": "1.0",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
+	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",
 	"condition": {
 		"search": {
 			"current": -1,
@@ -31,13 +32,7 @@
 		},
 		"miniprogram": {
 			"current": 0,
-			"list": [
-				{
-					"id": -1,
-					"name": "db guide",
-					"pathName": "pages/databaseGuide/databaseGuide"
-				}
-			]
+			"list": []
 		}
 	}
 }

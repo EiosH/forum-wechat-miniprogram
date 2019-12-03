@@ -1,3 +1,4 @@
 {
-    "navigationBarTitleText":"阅读"
+    "navigationBarTitleText":"详情",
+   "enablePullDownRefresh": false
 }

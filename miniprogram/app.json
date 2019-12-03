@@ -1,23 +1,54 @@
 {
   "pages": [
     "pages/posts/post",
+    "pages/Home/Home",
+    "pages/issue/issue-tocaobiaobai/issue-tocaobiaobai",
+    "pages/issue/issue-ershoujiaoyi/issue-ershoujiaoyi",
+    "pages/issue/issue",
     "pages/posts/post-detail/post-detail",
-    "pages/myApp/myapp",
-    "pages/index/index",
-    "pages/userConsole/userConsole",
-    "pages/databaseGuide/databaseGuide",
-    "pages/storageConsole/storageConsole",
-    "pages/addFunction/addFunction",
-    "pages/chooseLib/chooseLib",
-    "pages/openapi/openapi",
-    "pages/Home/Home"
+    "pages/issue/issue-jianzhixinxi/issue-jianzhixinxi",
+    "pages/issue/issue-shiwuzhaoling/issue-shiwuzhaoling",
+    "pages/posts/post-url/B/B",
+    "pages/posts/post-url/E/E",
+    "pages/posts/post-url/J/J",
+    "pages/posts/post-url/S/S",
+    "pages/Home/my-collect/my-collect",
+    "pages/Home/my-comment/my-comment",
+    "pages/Home/my-post/my-post",
+    "pages/Home/my-Administrator/my-Administrator"
   ],
   "window": {
-    "backgroundColor": "#F6F6F6",
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "云开发 QuickStart",
-    "navigationBarTextStyle": "black"
+    "backgroundColor": "#F0F0F0",
+    "navigationBarBackgroundColor": "#DD4F43",
+    "navigationBarTitleText": "云开发",
+    "navigationBarTextStyle": "white",
+    "enablePullDownRefresh": true,
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#321234",
+    "selectedColor": "#123455",
+    "backgroundColor": "#fafafa",
+    "list": [
+      {
+        "pagePath": "pages/posts/post",
+        "text": "主页",
+        "iconPath": "images/icon/index.png",
+        "selectedIconPath": "images/icon/_INDEX.png"
+      },
+      {
+        "pagePath": "pages/issue/issue",
+        "text": "发布",
+        "iconPath": "images/icon/issue.png",
+        "selectedIconPath": "images/icon/_ISSUE.png"
+      },
+      {
+        "pagePath": "pages/Home/Home",
+        "text": "我的",
+        "iconPath": "images/icon/home.png",
+        "selectedIconPath": "images/icon/_HOME.png"
+      }
+    ]
   },
   "sitemapLocation": "sitemap.json"
 }

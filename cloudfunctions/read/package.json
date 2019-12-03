@@ -1,0 +1,7 @@
+{
+  "name": "read",
+  "version": "1.0.0",
+  "dependencies": {
+    "wx-server-sdk": "^1.5.3"
+  }
+}
